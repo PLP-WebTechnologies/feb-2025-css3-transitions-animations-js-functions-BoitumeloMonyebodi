@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Interactive Animation Page</title>
+  <style>
+    /* Basic Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    /* Animated Box */
+    #animatedBox {
+      width: 100px;
+      height: 100px;
+      background-color: blue;
+      border-radius: 10px;
+      transition: transform 1s ease, background-color 1s ease;
+    }
+
+    /* Animation */
+    @keyframes moveBox {
+      0% {
+        transform: translateX(0);
+        background-color: blue;
+      }
+      50% {
+        transform: translateX(200px);
+        background-color: red;
+      }
+      100% {
+        transform: translateX(0);
+        background-color: blue;
+      }
+    }
+
+    /* Form styles */
+    #userForm {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    input[type="text"] {
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+
+    #welcomeMessage {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <div>
+    <!-- Animated Box -->
+    <div id="animatedBox"></div>
+
+    <!-- Form for storing data in localStorage -->
+    <div id="userForm">
+      <input type="text" id="userName" placeholder="Enter your name" />
+      <button onclick="storeName()">Save Name</button>
+    </div>
+
+    <!-- Welcome Message -->
+    <div id="welcomeMessage"></div>
+  </div>
+
+  <script>
+    // Function to store name in localStorage
+    function storeName() {
+      const name = document.getElementById("userName").value;
+      if (name) {
+        localStorage.setItem("userName", name);
+        displayWelcomeMessage();
+      }
+    }
+
+    // Function to display the welcome message from localStorage
+    function displayWelcomeMessage() {
+      const storedName = localStorage.getItem("userName");
+      const welcomeMessage = document.getElementById("welcomeMessage");
+      if (storedName) {
+        welcomeMessage.textContent = Welcome, ${storedName}!;
+      } else {
+        welcomeMessage.textContent = "Please enter your name.";
+      }
+    }
+
+    // Function to trigger animation when clicking on the box
+    function triggerAnimation() {
+      const box = document.getElementById("animatedBox");
+      box.style.animation = "moveBox 3s infinite"; // Trigger the animation
+    }
+
+    // Event listener to trigger animation on box click
+    document.getElementById("animatedBox").addEventListener("click", triggerAnimation);
+
+    // Display welcome message when the page loads
+    window.onload = function() {
+      displayWelcomeMessage();
+    };
+  </script>
+
+</body>
+</html>
